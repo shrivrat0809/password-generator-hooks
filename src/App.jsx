@@ -7,6 +7,7 @@ function App() {
   const [length, setLength] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const passwordRef = useRef(null);
   const passwordGenerator = useCallback(() => {
     let pass = "";
@@ -23,6 +24,7 @@ function App() {
   }, [length, numberAllowed, charAllowed, setPassword]);
 
   const copyPasswordToClipboard = useCallback(() => {
+    setIsCopied(true);
     passwordRef.current?.select();
     passwordRef.current?.setSelectionRange(0, 999);
     window.navigator.clipboard.writeText(password);
@@ -47,7 +49,7 @@ function App() {
           className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 cursor-pointer "
           onClick={copyPasswordToClipboard}
         >
-          copy
+          {isCopied ? "Copied" : "Copy"}
         </button>
       </div>
       <div className="flex text-sm gap-x-2">
